@@ -34,6 +34,9 @@ def scrape_bill_info_selenium(url):
         # Additional wait to ensure all dynamic content is loaded
         time.sleep(10)
 
+        # Print the page source for debugging
+        print(driver.page_source)
+
         # Retry mechanism to handle cases where elements are not immediately available
         retries = 3
         while retries > 0:
@@ -65,6 +68,13 @@ def scrape_bill_info_selenium(url):
         #     EC.visibility_of_element_located((By.CSS_SELECTOR, "YOUR_AUTHORS_SELECTOR"))
         # )
         # authors_text = authors_element.text
+
+    except Exception as e:
+        print(f"Failed to retrieve or parse {url}: {e}")
+    finally:
+        driver.quit()
+
+    return digest_text, authors_text
 
     except Exception as e:
         print(f"Failed to retrieve or parse {url}: {e}")
